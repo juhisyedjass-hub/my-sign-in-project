@@ -118,6 +118,83 @@
         }
 
         .toggle-link { color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline; }
+        /* ================== RESPONSIVE UPGRADE ================== */
+
+/* Large screens adjustment */
+@media (max-width: 1200px) {
+    .main-card {
+        width: 95%;
+        height: 600px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .main-card {
+        width: 95%;
+        height: auto;
+        min-height: 600px;
+    }
+
+    .glass-box {
+        width: 380px;
+        height: auto;
+    }
+
+    #toggle-form:checked ~ .main-card .glass-box {
+        right: calc(100% - 420px);
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    body {
+        padding: 20px;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .main-card {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        border-radius: 20px;
+        padding: 40px 0;
+    }
+
+    .glass-box {
+        position: relative;
+        right: auto;
+        width: 92%;
+        height: auto;
+        margin: auto;
+        border-radius: 20px;
+        transition: 0.5s ease;
+    }
+
+    /* Disable sliding on small screens */
+    #toggle-form:checked ~ .main-card .glass-box {
+        right: auto;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    input {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        padding: 12px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -174,4 +251,5 @@
     </div>
 
 </body>
+
 </html>
