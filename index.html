@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Integrated Glass Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #a78bfa;
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+            --text: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            height: 100vh; margin: 0;
+            font-family: 'Inter', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            background: #0b0e14; /* Dark outer background */
+        }
+
+        /* Success Notification */
+        .toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: #10b981; color: white; padding: 15px 40px;
+            border-radius: 50px; font-weight: bold; transition: 0.5s; z-index: 2000;
+        }
+        #success:target .toast { top: 30px; animation: fadeAway 3s forwards; }
+        @keyframes fadeAway { 0%, 80% { opacity: 1; top: 30px; } 100% { opacity: 0; top: -100px; } }
+
+        #toggle-form { display: none; }
+
+        /* Main Card with Background Image Inside */
+        .main-card {
+            width: 1000px; height: 600px;
+            background: url('bg-img.png') no-repeat center center/cover;
+            border-radius: 30px;
+            position: relative;
+            display: flex; align-items: center;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Dark overlay inside the card only */
+        .main-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        /* Sliding Glass Box */
+        .glass-box {
+            width: 420px; height: 520px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 40px;
+            position: absolute;
+            /* Start: Right side (Login) */
+            right: 40px; 
+            transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 10;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        /* Slide to Left Side on Signup */
+        #toggle-form:checked ~ .main-card .glass-box {
+            right: calc(100% - 460px);
+        }
+
+        /* Form Visibility Logic */
+        .signup-form, #toggle-form:checked ~ .main-card .login-form { display: none; }
+        #toggle-form:checked ~ .main-card .signup-form { 
+            display: block; animation: fadeIn 0.5s forwards; 
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Inputs & Buttons */
+        h2 { font-size: 2rem; color: var(--text); margin: 0 0 10px 0; }
+        p.desc { color: #ddd; margin-bottom: 25px; font-size: 0.9rem; }
+
+        input {
+            width: 100%; padding: 14px; margin: 10px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px; color: white; outline: none;
+        }
+        input:focus { border-color: var(--accent); }
+
+        .submit-btn {
+            width: 100%; padding: 14px; background: var(--accent);
+            border: none; border-radius: 12px; color: #000;
+            font-weight: bold; cursor: pointer; margin-top: 15px;
+            transition: 0.3s;
+        }
+        .submit-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
+
+        /* Social Icons */
+        .socials { display: flex; gap: 15px; margin-top: 25px; justify-content: center; }
+        .social-icon {
+            width: 45px; height: 45px; border-radius: 50%;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.1);
+            display: flex; justify-content: center; align-items: center;
+            color: white; text-decoration: none; transition: 0.3s;
+        }
+        .social-icon:hover { background: var(--accent); color: #000; }
+        .socials p{
+            color:whitesmoke;
+        }
+
+        .toggle-link { color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div id="success">
+        <div class="toast">✅ Action Successful & Form Cleared!</div>
+    </div>
+
+    <input type="checkbox" id="toggle-form">
+
+    <div class="main-card">
+        <div class="glass-box">
+            
+            <div class="login-form">
+                <h2>Welcome Back</h2>
+                <p class="desc">Login to your Account!</p>
+                <form action="#success">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="submit-btn">Sign In</button>
+                </form>
+                <div class="socials">
+                    <p>Sign in with</p>
+                    <br>
+                    <a href="https://google.com" target="_blank" class="social-icon"><i class="fab fa-google"></i></a>
+                    <a href="https://github.com" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                </div>
+                <p class="desc" style="text-align: center; margin-top: 25px;">
+                   Don't have an account? <label for="toggle-form" class="toggle-link">Create Account</label>
+                </p>
+            </div>
+
+            <div class="signup-form">
+                <h2>Register</h2>
+                <p class="desc">Create your new account!</p>
+                <form action="#success">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="submit-btn">Register</button>
+                </form>
+                <div class="socials">
+                    <p>sign up with</p>
+                    <br>
+                    <a href="https://google.com" target="_blank" class="social-icon"><i class="fab fa-google"></i></a>
+                    <a href="https://github.com" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                </div>
+                <p class="desc" style="text-align: center; margin-top: 25px;">
+                  Already have an account? <label for="toggle-form" class="toggle-link">Login Here</label>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
